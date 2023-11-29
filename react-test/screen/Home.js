@@ -1,13 +1,21 @@
-import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, View } from "react-native";
-import { useEffect, useState } from "react";
 import {
-  AdjustmentsHorizontalIcon,
-  BarsArrowUpIcon,
-  HeartIcon,
-} from "react-native-heroicons/outline";
+  ActivityIndicator,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+//importing hooks
+import { useEffect, useState } from "react";
+
+//importing icons
+import { Ionicons, Octicons } from "@expo/vector-icons";
 const Home = () => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
+
+  //function to fetch API data
   async function fetchData() {
     try {
       const response = await fetch(
@@ -28,64 +36,73 @@ const Home = () => {
   return (
     <>
       {!isLoading ? (
+        // Adding scrollview
         <ScrollView>
-        <View style={styles.viewStyle}>
-          <View style={styles.topHeaderStyle}>
-            <Text style={styles.totalItemStyle}>
-              {data.object.length + ` / ` + data.totalItems} products
-            </Text>
+          <View style={styles.viewStyle}>
+            <View style={styles.topHeaderStyle}>
+              <Text style={styles.totalItemStyle}>
+                {data.object.length + ` / ` + data.totalItems} products
+              </Text>
 
-            <View
-              style={{
-                flexDirection: "row",
-              }}
-            >
-              <Text style={styles.topheadericon}>
-                <BarsArrowUpIcon size={18} />
-                Sort
-              </Text>
-              <Text style={styles.topheadericon}>
-                <AdjustmentsHorizontalIcon size={18} /> Filter
-              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                }}
+              >
+                <Text style={styles.topheadericon}>
+                  <Octicons name="sort-asc" size={18} color="black" />
+                  &nbsp;Sort
+                </Text>
+                <Text style={styles.topheadericon}>
+                  <Ionicons name="filter-outline" size={18} color="black" />{" "}
+                  Filter
+                </Text>
+              </View>
             </View>
-          </View>
-        
-          <View style={styles.maincontainer}>
-            {data
-              ? data.object.map((item, index) => {
-                  return (
-                    <View style={styles.container} key={index}>
-                      <View style={{ paddingRight: "6px", paddingLeft: "6px" }}>
-                        <View style={styles.imageContainer}>
-                          <Image
-                            style={styles.image}
-                            source={{
-                              uri: `${item.mediaUrl}`,
-                            }}
-                          />
-                          <HeartIcon style={styles.heartstyle} size={18} />
-                          <Text style={styles.newCollection}>New</Text>
-                        </View>
-                        <View>
-                          <Text style={styles.name}>{item.name}</Text>
-                          <Text style={styles.description}>
-                            {item.description}
-                          </Text>
-                          <Text style={styles.category}>
-                            {item.category[0].name}
-                          </Text>
-                          <Text style={styles.price}>
-                            &#x20B9; {item.variants[0].mrp}
-                          </Text>
+
+            {/* showing detail on card */}
+            <View style={styles.maincontainer}>
+              {data
+                ? data.object.map((item, index) => {
+                    return (
+                      <View style={styles.container} key={index}>
+                        <View
+                          style={{ paddingRight: "6px", paddingLeft: "6px" }}
+                        >
+                          <View style={styles.imageContainer}>
+                            <Image
+                              style={styles.image}
+                              source={{
+                                uri: `${item.mediaUrl}`,
+                              }}
+                            />
+                            <Ionicons
+                              name="md-heart-outline"
+                              size={18}
+                              color="black"
+                              style={styles.heartstyle}
+                            />
+                            <Text style={styles.newCollection}>New</Text>
+                          </View>
+                          <View>
+                            <Text style={styles.name}>{item.name}</Text>
+                            <Text style={styles.description}>
+                              {item.description}
+                            </Text>
+                            <Text style={styles.category}>
+                              {item.category[0].name}
+                            </Text>
+                            <Text style={styles.price}>
+                              &#x20B9; {item.variants[0].mrp}
+                            </Text>
+                          </View>
                         </View>
                       </View>
-                    </View>
-                  );
-                })
-              : ""}
+                    );
+                  })
+                : ""}
+            </View>
           </View>
-          
-        </View>
         </ScrollView>
       ) : (
         <View style={styles.loading}>

@@ -4,12 +4,10 @@ import Home from "./screen/Home";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
-  ArrowLeftIcon,
-  HeartIcon,
-  MagnifyingGlassIcon,
-  ShoppingBagIcon,
-} from "react-native-heroicons/outline";
-
+  SimpleLineIcons,
+  Ionicons,
+  AntDesign,
+} from "@expo/vector-icons";
 const Stack = createNativeStackNavigator();
 export default function App() {
   return (
@@ -25,13 +23,33 @@ export default function App() {
               fontSize: 18,
             },
             headerLeft: () => (
-              <ArrowLeftIcon style={{ marginLeft: 10 }} size={24} />
+              <AntDesign
+                name="arrowleft"
+                size={24}
+                color="black"
+                style={{ marginLeft: 10 }}
+              />
             ),
             headerRight: () => (
               <View style={styles.headderRightStyle}>
-                <HeartIcon size={24} style={styles.icon} />
-                <MagnifyingGlassIcon style={styles.icon} size={24} />
-                <ShoppingBagIcon style={styles.icon} size={24} />
+                <Ionicons
+                  name="md-heart-outline"
+                  size={24}
+                  color="black"
+                  style={styles.icon}
+                />
+                <Ionicons
+                  name="ios-search-outline"
+                  size={24}
+                  style={styles.icon}
+                  color="black"
+                />
+                <SimpleLineIcons
+                  name="bag"
+                  size={24}
+                  style={styles.icon}
+                  color="black"
+                />
               </View>
             ),
           }}
@@ -50,7 +68,7 @@ const styles = StyleSheet.create({
   icon: {
     marginRight: 26,
   },
-  container:{
-    flex:1
-  }
+  container: {
+    flex: 1,
+  },
 });
